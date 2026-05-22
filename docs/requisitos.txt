@@ -1,0 +1,62 @@
+Especificação Técnica: Interface Web para Integração Local com Ollama
+
+1. Contextualização Técnica e Propósito do Projeto
+
+Este documento estabelece as diretrizes para o desenvolvimento de uma interface web de alto desempenho, p
+rojetada para servir como camada de interação com Modelos de Linguagem de Grande Escala (LLMs) executados localmente. 
+Em um panorama onde a soberania de dados e a agilidade de resposta são diferenciais competitivos, 
+a hospedagem local via Ollama elimina a latência inerente às APIs de nuvem e garante a privacidade integral das informações. 
+Para o público jovem, essa arquitetura é estratégica: ela permite uma exploração criativa sem as barreiras de tempo de espera (lag) 
+e dentro de um ambiente seguro.
+
+A adoção de uma interface web (HTML5/JavaScript) é a solução técnica ideal para abstrair a complexidade do back-end. Ao converter comandos de terminal em uma experiência visual intuitiva, democratizamos o acesso ao motor de IA sem sacrificar o poder computacional. Esta camada de apresentação deve atuar como um mediador fluido, traduzindo requisições complexas em interações dinâmicas. Para sustentar essa operação, a infraestrutura de rede local deve estar rigorosamente alinhada aos requisitos técnicos do serviço.
+
+2. Configuração do Ambiente e Infraestrutura de Rede
+
+A estabilidade da aplicação depende de uma comunicação sem fricções entre o navegador e o daemon do Ollama. Diferente de aplicações web tradicionais baseadas em nuvem, aqui o tráfego ocorre integralmente no loopback do sistema, exigindo uma configuração de rede local padronizada.
+
+Os requisitos mandatórios de infraestrutura são:
+
+* Host de Execução: O serviço deve estar disponível em localhost (127.0.0.1).
+* Porta de Comunicação: É obrigatória a utilização da porta 11434, padrão nativo do Ollama.
+* Protocolo de Comunicação: A troca de dados será realizada via HTTP/REST.
+* Segurança e CORS: Para mitigar bloqueios de segurança do navegador (Cross-Origin Resource Sharing), é fundamental configurar a variável de ambiente OLLAMA_ORIGINS no sistema operacional (ex: OLLAMA_ORIGINS="*") para permitir que o front-end estabeleça conexão com a API local sem interrupções.
+
+A manutenção da porta 11434 simplifica a arquitetura ao dispensar proxies reversos complexos durante a fase de desenvolvimento. Uma vez garantida a conectividade, o sistema deve focar na orquestração da instância específica do modelo de IA.
+
+3. Parametrização e Execução do Modelo de IA
+
+O modelo de IA funciona como o motor cognitivo central, processando prompts e gerando respostas baseadas em parâmetros pré-definidos de temperatura e estilo. A execução no ambiente local deve ser disparada rigorosamente através do comando:
+
+ollama run lama3.1-jovem-t0.9-rude:latest
+
+Decomposição técnica dos parâmetros do modelo:
+
+* Identidade (lama3.1-jovem-rude): Embora o nome sugira uma base Llama 3.1, a integração deve ser agnóstica à arquitetura subjacente, contanto que o motor Ollama suporte a orquestração do arquivo. O sufixo "jovem-rude" indica um ajuste fino (fine-tuning) ou um System Prompt voltado para um tom informal, direto e descontraído.
+* Criatividade (t0.9): O parâmetro de temperatura em 0.9 (Temperature 0.9) define uma alta variância na escolha dos tokens. Isso resulta em respostas mais criativas e menos previsíveis, essencial para manter o interesse do público juvenil através de uma linguagem dinâmica e orgânica.
+
+Essa personalidade técnica dita a estética da interface, exigindo um design que acompanhe a energia e a informalidade do modelo.
+
+4. Requisitos de Interface (UI) e Experiência do Usuário (UX) Juvenil
+
+Para o público jovem, a funcionalidade é apenas o requisito mínimo; o engajamento é gerado pelo "capricho" visual e pela agilidade percebida. A psicologia do design aqui deve priorizar o estímulo visual constante e a simplicidade de uso.
+
+Diretrizes obrigatórias de design:
+
+* Estética Moderna: Implementação de Dark Mode nativo, tipografia em negrito (bold) de fácil leitura e interfaces baseadas em componentes de mensagens (bubbles).
+* Feedback de Estado: Inclusão de microinterações e animações de loading durante o processamento do motor de IA para reduzir a carga cognitiva de espera.
+* Intuitividade no Prompting: Campo de entrada único, expansível e com suporte a atalhos de teclado (Shift+Enter), focando totalmente na conversação.
+
+Uma interface visualmente arrojada diferencia este software de ferramentas corporativas genéricas, transformando a ferramenta técnica em um produto de consumo digital desejável. A eficácia desta interface, contudo, depende da eficiência do fluxo de dados subjacente.
+
+5. Fluxo de Dados e Lógica de Envio de Questões
+
+O ciclo de vida de uma requisição deve ser otimizado para oferecer o menor "Time to First Token" (TTFT) possível. O fluxo deve seguir rigorosamente estes passos:
+
+1. Captura e Higienização: O input do usuário é capturado e higienizado para evitar quebras no JSON.
+2. Encapsulamento de Payload: A questão é estruturada no formato JSON esperado pelo endpoint /api/generate.
+  * Exemplo de Payload:
+3. Transmissão Assíncrona: Envio via método POST para http://localhost:11434/api/generate.
+4. Renderização via Streaming: O parâmetro "stream": true é mandatório. O front-end deve ser capaz de processar chunks de dados à medida que chegam, renderizando a resposta palavra por palavra. Isso é crucial para a percepção de performance, garantindo que o usuário veja a IA "trabalhando" instantaneamente.
+
+Resiliência e Erros: O sistema deve implementar um tratamento de erros robusto. Caso o serviço Ollama não responda (serviço offline ou porta ocupada), a interface deve apresentar um alerta técnico claro e instruir o usuário a verificar o status do motor local. A consolidação destes pilares — rede configurada, modelo parametrizado e interface de alto nível — garante um software coeso e perfeitamente alinhado às expectativas de inovação do público jovem.

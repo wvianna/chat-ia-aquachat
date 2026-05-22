@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat-IA · Aqua</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- Partículas de folhas flutuantes (preenchidas via JS) -->
+  <div id="particles" aria-hidden="true"></div>
+
+  <div id="app">
+
+    <header id="header">
+      <div id="header-inner">
+        <span id="logo">
+          <svg id="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+               aria-hidden="true">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"
+                  fill="rgba(56,189,248,0.15)" />
+            <path d="M12 2C9 5 7 8.5 7 12s2 7 5 8c3-1 5-4.5 5-8S15 5 12 2z"
+                  fill="#38bdf8" />
+            <path d="M12 2C9 5 7 8.5 7 12s2 7 5 8c3-1 5-4.5 5-8S15 5 12 2z"
+                  fill="#0ea5e9" opacity="0.6" />
+            <circle cx="12" cy="12" r="3" fill="#e0f2fe" opacity="0.9"/>
+            <path d="M12 5v14M5 12h14" stroke="#38bdf8" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+          </svg>
+          <span id="logo-text">Aqua<span class="accent">Chat</span></span>
+        </span>
+        <span id="model-badge">💧 lama3.1-jovem · t0.9</span>
+      </div>
+    </header>
+
+    <main id="chat-container">
+      <div id="messages" role="log" aria-live="polite" aria-label="Histórico da conversa">
+
+        <div class="message assistant" id="msg-welcome">
+          <div class="bubble">
+            <span class="bubble-text">💧 Fala! Sou sua IA local, zero nuvem, zero rastreamento. Tô aqui pra conversar sobre qualquer parada — pode mandar.</span>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <footer id="input-area">
+      <div id="input-wrapper">
+        <textarea
+          id="prompt-input"
+          placeholder="Manda a mensagem... (Enter envia · Shift+Enter nova linha)"
+          rows="1"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="true"
+          aria-label="Campo de mensagem"
+        ></textarea>
+        <button id="send-btn" aria-label="Enviar mensagem" title="Enviar (Enter)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+      <p id="input-hint">🔒 IA local · privacidade total · sem internet</p>
+    </footer>
+
+    <!-- Toast de erro -->
+    <div id="error-toast" role="alert" aria-live="assertive" aria-hidden="true">
+      <span id="error-icon">⚠️</span>
+      <span id="error-message"></span>
+    </div>
+
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
