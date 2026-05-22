@@ -1,4 +1,4 @@
-# EcoChat 🌿
+# AquaChat 🌿
 
 Interface web de chat com IA local via [Ollama](https://ollama.com), com tema ambiental e acesso a partir de qualquer dispositivo da rede.
 
